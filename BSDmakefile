@@ -1,6 +1,6 @@
 CPPFLAGS = -Wall -std=c++11 -D_GLIBCXX_USE_C99 -D_GLIBCXX_USE_C99_MATH -D_GLIBCXX_USE_C99_MATH_TR1
 
-all: ligas
+all: catalogo
 
 src/Catalogo.o: src/Catalogo.cpp
 	g++ -c -o $@ $< $(CPPFLAGS)
