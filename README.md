@@ -1,31 +1,25 @@
 # Especificações de uso
 
 ### 1. Compilação
-Basta rodar o comando `make` na pasta raiz do projeto. Isso irá gerar o executável `ligas` na raiz do projeto.
+Basta rodar o comando `make` na pasta raiz do projeto. Isso irá gerar o executável `catalogo` na raiz do projeto. Para limpar os arquivos gerados pela compilação, basta rodar o comando `make clean`.
 
 ### 2. Execução
-Para executar o projeto basta rodar o executável `ligas`. É possível fornecer o número de times e o número de anos que o programa deve ter. Caso não seja fornecido nenhum parâmetro, o programa irá rodar com os valores padrão de 5 times e 8 anos.
+Para executar o projeto basta rodar o executável `catalogo`. É necessário especificar através da linha de comando qual opção será executada. As opções são:
+
+        |Cod| Operação |
+        |1| Imprime o catálogo |
+        |2| Insere um filme a partir das entradas do usuário |
+        |3| Insere vários filmes a partir do arquivo de entrada especificado |
+        |4| Remove um filme a partir das entradas do usuário |
+        |5| Procura um filme a partir das entradas do usuário |
+        |6| Altera um atributo do filme especificado pelo usuário |
+        |7| Procura no catálogo o filme mais bem avaliado |
+
+O arquivo que mantém a persistência dos filmes é o `filmes.csv`, é possível modificar o path do arquivo dentro do construtor da classe Catalogo no arquivo Catalogo.cpp. 
+
+O arquivo `novosfilmes.csv` contém uma sugestão para filmes que serão inseridos no catálogo quando a opção 3 for selecionada..
 
 ```
-./ligas <número de times> <número de anos>
+./catalogo <opção>
 ```
-O comando acima irá executar o programa com os parâmetros fornecidos.
-
-### 3. Descrição do funcionamento
-
-O programa cria, automaticamente, 3 ligas (Campeonato Brasileiro, Campeonato Carioca e Libertadores) e T times em cada (valor de T padrão ou recebido por linha de comando). 
-
-A criação automática se dá pois o construtor da classe Liga inicializa um vetor com T times, além de dar nomes e o tamanho N do vetor de anos que cada time possui. O construtor da classe Ano gera um número aleatório para os GolsSofridos e GolsEfetuados.
-
-Dessa forma, ao inicializar as 3 ligas, são gerados os T times para cada indice do vetor de ligas (na verdade são objetos dentro do objetos de ligas) e cada time tem N objetos de anos.
-
-As classes possuem métodos para acessar os times na liga, os anos de cada time e os gols sofridos e efetuados de cada time em cada ano. Além disso, há métodos para calcular a média de gols sofridos e efetuados de cada time em cada liga. As lógicas implementadas para solucionar os problemas passados são realizados nas funções menuX, uma para cada problema, utilizando esse set de métodos.
-
-### 4. Estrutura das classes
-
-As estruturas seguem um esquema semelhante a uma matriz tridimensional baseado em classes. A primeira dimensão da "matriz" é a classe Liga, a segunda é a classe Time e a terceira é a classe Ano. 
-
-O programa não usa necessariamente uma matriz tridimensional. A estrutura é apenas uma analogia para facilitar o entendimento. Na realidade, o programa usa um vector de Ligas de tamanho 3 (um item para cada liga) e cada Liga possui um vector de Times de tamanho T (um item para cada time) e cada Time possui um vector de Anos de tamanho N (um item para cada ano), onde cada item ano possui os gols sofridos e efetuados pelo time naquele ano e liga.
-
-Similarmente ao caso de uma matriz tridimensional, pode-se acessar o item (i, j, k) da "matriz" usando Ligas[i].Times[j].getGolsSofridosNoAno(k). Para parecer mais com o acesso em uma matriz tridimensional, poderia-se utilizar o operador de indexação sobrecarregado.
-
+O comando acima irá executar o programa com a opção escolhida.

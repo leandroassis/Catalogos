@@ -142,6 +142,8 @@ int main(int argc, char *argv[]){
             catalogo(nome);
             break;
         case 7:
+            // busca o filme mais bem avaliado usando o método filmeMaisBemAvaliado
+            (void) catalogo.filmeMaisBemAvaliado();
             break;
         default:
             break;

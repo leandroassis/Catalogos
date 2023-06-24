@@ -10,6 +10,95 @@ ostream &operator<<(ostream &out, const Catalogo &catalogo){
     return out;
 }
 
+int leFilmes(string nomeArquivo, vector<Filme> &filmes){
+    fstream arquivo;
+
+    arquivo.open(nomeArquivo, ios::in);
+
+    if(!arquivo.is_open()){
+        cout << "Erro ao abrir arquivo. Verifique se o arquivo \'" << nomeArquivo << "\' está no mesmo diretório que esse executável, ou passe o path completo." << endl;
+        return 0;
+    }
+
+    string nomeFilme, produtoraFilme, notaFilme;
+
+    while(!arquivo.eof()){
+
+        getline(arquivo, nomeFilme, ';');
+        getline(arquivo, produtoraFilme, ';');
+        getline(arquivo, notaFilme);
+
+        Filme filme;
+
+        try{    
+            filme.nome = nomeFilme;
+            filme.produtora = produtoraFilme;
+            filme.nota = std::stod(notaFilme);
+        }
+        catch(...){
+            cout << "Erro ao ler o arquivo." << endl;
+            cout << "Certifique-se que o arquivo possui o formato correto." << endl;
+            cout << "O formato deve ser: <nome>;<produtora>;<nota>" << endl;
+            arquivo.close();
+            return 0;
+        }
+        
+        filmes.push_back(filme);
+    }
+
+    arquivo.close();
+    return 1;
+}
+
+// funções auxiliares
+int Catalogo::verificaFilme(const Filme &filme){
+    int indice = 0;
+    // percorre o catalogo inteiro
+    for(auto filmeCatalogo : this->filmes){
+        // verifica se o filme ja existe
+        if(filmeCatalogo == filme){
+            cout << "O filme existe no catalogo." << endl;
+            return indice;
+        }
+        indice++;
+    }
+
+    // se não existe retorna -1
+    return -1;
+}
+
+int Catalogo::insereFilme(const Filme &filme){
+    int indice = 0;
+    
+    // se for o primeiro filme, insere
+    if(this->filmes.size() == 0){
+        this->filmes.push_back(filme);
+        return 0;
+    }
+
+    // verifica se o catalogo não está cheio
+    if((this->filmes.size() < this->tamanhoMaximo)){
+        // se achar o filme no catalogo
+        if(verificaFilme(filme) != -1){
+            cout << "Tentando inserir filme repetido." << endl;
+            return -1;
+        }
+        
+        // se não achar, insere
+        this->filmes.push_back(filme);
+        sort(this->filmes.begin(), this->filmes.end(), ordenacaoCrescente); // ordena
+
+        // retorna o indice do filme inserido
+        for(auto filmeCatalogo : this->filmes){
+            if(filmeCatalogo == filme) return indice;
+            indice++;
+        }
+    }
+    
+    cout << "Catalogo cheio. Não é possível adicionar mais filmes." << endl;
+    return -1;
+}
+
 // funções membro
 Catalogo::Catalogo(unsigned tamanhoMaximo){
     this->tamanhoMaximo = tamanhoMaximo;
@@ -143,93 +232,19 @@ int Catalogo::operator()(string nomeFilme, string nomeAtribuito, double notaFilm
     return indice;
 }
 
-// funções auxiliares
-int Catalogo::verificaFilme(const Filme &filme){
+int Catalogo::filmeMaisBemAvaliado(){
     int indice = 0;
-    // percorre o catalogo inteiro
-    for(auto filmeCatalogo : this->filmes){
-        // verifica se o filme ja existe
-        if(filmeCatalogo == filme){
-            cout << "O filme existe no catalogo." << endl;
-            return indice;
+    this->notaFilmeMaisBemAvaliado = 0;
+
+    for(auto filme : this->filmes){
+        if(filme > this->notaFilmeMaisBemAvaliado){
+            this->notaFilmeMaisBemAvaliado = filme.nota;
+            this->indiceFilmeMaisBemAvaliado = (unsigned) indice;
         }
         indice++;
     }
 
-    // se não existe retorna -1
-    return -1;
-}
-
-int Catalogo::insereFilme(const Filme &filme){
-    int indice = 0;
+    cout << this->filmes[this->indiceFilmeMaisBemAvaliado];
     
-    // se for o primeiro filme, insere
-    if(this->filmes.size() == 0){
-        this->filmes.push_back(filme);
-        return 0;
-    }
-
-    // verifica se o catalogo não está cheio
-    if((this->filmes.size() < this->tamanhoMaximo)){
-        // se achar o filme no catalogo
-        if(verificaFilme(filme) != -1){
-            cout << "Tentando inserir filme repetido." << endl;
-            return -1;
-        }
-        
-        // se não achar, insere
-        this->filmes.push_back(filme);
-        sort(this->filmes.begin(), this->filmes.end(), ordenacaoCrescente); // ordena
-
-        // retorna o indice do filme inserido
-        for(auto filmeCatalogo : this->filmes){
-            if(filmeCatalogo == filme) return indice;
-            indice++;
-        }
-    }
-    
-    cout << "Catalogo cheio. Não é possível adicionar mais filmes." << endl;
-    return -1;
-}
-
-// funções externas
-
-int leFilmes(string nomeArquivo, vector<Filme> &filmes){
-    fstream arquivo;
-
-    arquivo.open(nomeArquivo, ios::in);
-
-    if(!arquivo.is_open()){
-        cout << "Erro ao abrir arquivo. Verifique se o arquivo \'" << nomeArquivo << "\' está no mesmo diretório que esse executável, ou passe o path completo." << endl;
-        return 0;
-    }
-
-    string nomeFilme, produtoraFilme, notaFilme;
-
-    while(!arquivo.eof()){
-
-        getline(arquivo, nomeFilme, ';');
-        getline(arquivo, produtoraFilme, ';');
-        getline(arquivo, notaFilme);
-
-        Filme filme;
-
-        try{    
-            filme.nome = nomeFilme;
-            filme.produtora = produtoraFilme;
-            filme.nota = std::stod(notaFilme);
-        }
-        catch(...){
-            cout << "Erro ao ler o arquivo." << endl;
-            cout << "Certifique-se que o arquivo possui o formato correto." << endl;
-            cout << "O formato deve ser: <nome>;<produtora>;<nota>" << endl;
-            arquivo.close();
-            return 0;
-        }
-        
-        filmes.push_back(filme);
-    }
-
-    arquivo.close();
-    return 1;
+    return indice;
 }

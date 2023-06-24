@@ -29,10 +29,15 @@ class Catalogo{
         int operator()(string, int = 1);
         int operator()(string, string, string);
         int operator()(string, string, double);
+
+        // funções
+        int filmeMaisBemAvaliado();
         
     private:
         vector<Filme> filmes;
         unsigned tamanhoMaximo;
+        double notaFilmeMaisBemAvaliado;
+        unsigned indiceFilmeMaisBemAvaliado;
 
         // funções auxiliares
         int verificaFilme(const Filme &);
