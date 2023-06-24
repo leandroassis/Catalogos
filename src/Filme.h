@@ -18,6 +18,7 @@ ostream &operator<<(ostream &, const Filme &);
 istream &operator>>(istream &, Filme &);
 bool operator==(const Filme &, const Filme &);
 bool operator<(const Filme &, const Filme &);
+bool operator>(const Filme &, double);
 
 // funções auxiliares
 double verificaNota(double);

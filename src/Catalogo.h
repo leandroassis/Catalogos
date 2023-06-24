@@ -26,9 +26,9 @@ class Catalogo{
         int operator-=(const Filme &);
 
         // ()
-        int operator()(string);
-
-
+        int operator()(string, int = 1);
+        int operator()(string, string, string);
+        int operator()(string, string, double);
         
     private:
         vector<Filme> filmes;
@@ -37,4 +37,7 @@ class Catalogo{
         // funções auxiliares
         int verificaFilme(const Filme &);
         int insereFilme(const Filme &);
+        
 };
+
+int leFilmes(string, vector<Filme> &);

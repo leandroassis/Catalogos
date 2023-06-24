@@ -44,10 +44,10 @@ string verificaNomeFilme(string nome){
         cout << "Nome inválido. Nome será setado para 'Sem nome'" << endl;
         return "Sem nome";
     }
-    else if(nome.length() <= 15)
+    else if(nome.length() <= 25)
         return nome;
     else{
-        string nome_cortado = nome.substr(0, 15);
+        string nome_cortado = nome.substr(0, 25);
         cout << "Nome inválido. Nome será setado para " << nome_cortado << endl;
         return nome_cortado;
     }
@@ -58,10 +58,10 @@ string verificaProdutora(string produtora){
         cout << "Produtora inválida. Produtora será setada para 'Sem produtora'" << endl;
         return "Sem produtora";
     }
-    else if(produtora.length() <= 10)
+    else if(produtora.length() <= 25)
         return produtora;
     else{
-        string produtora_cortada = produtora.substr(0, 10);
+        string produtora_cortada = produtora.substr(0, 25);
         cout << "Produtora inválida. Produtora será setada para " << produtora_cortada << endl;
         return produtora_cortada;
     }
@@ -81,4 +81,8 @@ bool operator<(const Filme &filme1, const Filme &filme2){
 
 bool ordenacaoCrescente(Filme i1, Filme i2){
     return (i1 < i2);
+}
+
+bool operator>(const Filme &filme, double nota){
+    return (filme.nota > nota);
 }
